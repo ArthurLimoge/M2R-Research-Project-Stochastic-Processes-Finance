@@ -1,6 +1,12 @@
 # M2R-Project
 
-### Datasets:
+## Programs: 
+
+:large_blue_diamond: Market_study.py: 
+
+:large_blue_diamond: Variance_Ratio_test.Rmd: program testing weak-form market efficiency by using the Lo & MacKinley variance ratio test
+
+## Datasets:
 
 #### :large_orange_diamond: Daily data sets
 
