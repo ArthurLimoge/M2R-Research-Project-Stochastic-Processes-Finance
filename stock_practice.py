@@ -20,7 +20,7 @@ days = 100
 dataset = []
 
 year = 0  # split the data-sets into one-year windows. Can here change the indexing year.
-for i in file.Close[365*year:365*(year+1)]:  # study the stock prices at the market closing time
+for i in file.close[365*year:365*(year+1)]:  # study the stock prices at the market closing time
     if i == float(i):
         dataset.append(i)
 
