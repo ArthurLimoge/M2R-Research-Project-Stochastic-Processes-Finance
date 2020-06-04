@@ -14,6 +14,8 @@
 
 • Dataset5.csv -> Netflix stocks from 08/02/2013 to 07/02/2018 source - https://bit.ly/3gRZFfl
 
+• Dataset7.csv -> Goldman Sachs stocks from 04/06/2019 to 04/06/2020 source https://finance.yahoo.com/quote/GS/history
+
 
 #### :large_orange_diamond: High frequency datasets
 
