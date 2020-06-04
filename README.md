@@ -17,4 +17,4 @@
 
 #### :large_orange_diamond: High frequency datasets
 
-• Dataset6.csv -> S&P500 high frequency (1/min) from 17/11/2015 - source: https://www.quandl.com/databases/AS500/data
+• Dataset6.csv -> S&P500 high frequency stock prices (1/min) from 17/11/2015 - source: https://www.quandl.com/databases/AS500/data
