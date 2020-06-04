@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import norm
 
 # open the file in read mode
 # file = pd.read_csv('AAPL.csv')  # Data used: apple shares (03/06/2019 to 02/06/2020) - https://yhoo.it/2Br0rQh
@@ -76,6 +77,7 @@ def market_predictions(data):
 
         # f = dataset[len(dataset)-days-1:len(dataset)]
 
+
         # plot the actual data
         plt.plot(dataset, 'r')
         plt.xlabel('Time (days)')
@@ -83,6 +85,11 @@ def market_predictions(data):
         plt.show()
         return "Graph plotted."
 
+
+a = market_predictions(dataset)
+
+
+''' VARIANCE ROOT TEST (NOT RELEVANT)
 
 def delta(j, T, var_1, log_prices):
     res = 0
@@ -101,8 +108,7 @@ def variance_ratio_test(data):
         log_return_series.append(x)
     var_1 = np.var(log_return_series, ddof=1)  # one-period return sample variance
     vr_list = []
-    mult_factor = []
-    T = len(log_return_series)
+    T = len(log_return_series)  # number of log-data points
     for k in range(1, T):
         m = k*(T - k + 1)*(1 - k/T)  # this accounts for the bias of the var_k estimator defined below
         sum_term = []
@@ -114,19 +120,20 @@ def variance_ratio_test(data):
         vr_list.append(vr_k)
     # now, want to check that this variance ratio satisfies an RWH (Random Walk Hypothesis)
     asymptotic_var_vec = []
-    for i in range(1, T):  # NOT SURE ABOUT THE RANGE
-        asymptotic_var = 0
-        for j in range(1, k):
-            asymptotic_var += (2 * (k - j) / k) ** 2 * delta(j, T, var_1, log_return_series)
+    for k in range(1, T):
+        # asymptotic_var = 2*(2*k - 1)*(k - 1)/(3*k*T)  # variance assuming homoscedasticity
+        # the following three lines are the variance assuming heteroscedasticity
+        # asymptotic_var = 0
+        # for j in range(1, k):
+        #     asymptotic_var += (2 * (k - j) / k) ** 2 * delta(j, T, var_1, log_return_series)
         asymptotic_var_vec.append(asymptotic_var)
-    standardized_sample = np.divide(vr_list - np.ones(len(vr_list)), asymptotic_var_vec)
-    plt.plot(standardized_sample)
-    plt.show()
-    return vr_list
+    centered_sample = vr_list - np.ones(len(vr_list))
+    standardized_sample = np.divide(centered_sample, np.sqrt(asymptotic_var_vec))
+    # now check the p-value of this sample, under the null hypothesis (Lo & MacKinley) that it is standard normal
+    p_value_vector = np.ones(len(standardized_sample)) - norm.cdf(standardized_sample)
+    return p_value_vector
+'''
 
-
-a = variance_ratio_test(dataset)
-print(a)
 
 
 '''
