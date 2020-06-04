@@ -10,8 +10,8 @@ import numpy as np
 from scipy.stats import norm
 
 # open the file in read mode
-# file = pd.read_csv('AAPL.csv')  # Data used: apple shares (03/06/2019 to 02/06/2020) - https://yhoo.it/2Br0rQh
-file = pd.read_csv('SP1318.csv')  # Data used: S&P 500 stocks (08/02/2013 to 07/02/2018) - https://bit.ly/3gRZFfl
+# file = pd.read_csv('Dataset1.csv')  # Data used: apple shares (03/06/2019 to 02/06/2020) - https://yhoo.it/2Br0rQh
+file = pd.read_csv('Dataset2.csv')  # Data used: S&P 500 stocks (08/02/2013 to 07/02/2018) - https://bit.ly/3gRZFfl
 
 # number of days of predictions
 days = 100
