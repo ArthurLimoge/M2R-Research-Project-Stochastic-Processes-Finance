@@ -10,9 +10,9 @@ import numpy as np
 from scipy.stats import norm
 
 # open the file in read mode
-# file = pd.read_csv('Dataset1.csv')  # Data used: apple shares (03/06/2019 to 02/06/2020) - https://yhoo.it/2Br0rQh
-file = pd.read_csv('Dataset2.csv')  # Data used: S&P 500 stocks (08/02/2013 to 07/02/2018) - https://bit.ly/3gRZFfl
-# file = pd.read_csv('Dataset3.csv') # Data used: GM shares (04/06/2019 to 03/06/2020) - https://finance.yahoo.com/quote/gm/history?ltr=1
+# file = pd.read_csv('Dataset1.csv')  
+file = pd.read_csv('Dataset2.csv')  # sources for the datasets: https://github.com/ArthurLimoge/M2R-Project
+# file = pd.read_csv('Dataset3.csv')
 
 # number of days of predictions
 days = 100
