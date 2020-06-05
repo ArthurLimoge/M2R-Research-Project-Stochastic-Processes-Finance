@@ -90,53 +90,6 @@ def market_predictions(data):
 a = market_predictions(dataset)
 
 
-''' VARIANCE ROOT TEST (NOT RELEVANT)
-
-def delta(j, T, var_1, log_prices):
-    res = 0
-    rets = np.diff(log_prices)
-    for t in range(j+1, T):  # NOT SURE ABOUT THE RANGE
-        t -= 1  # array index is t-1 for t-th element
-        res += np.square((rets[t]-np.mean(rets))*(rets[t-j]-np.mean(rets)))
-    return res / ((T-1) * var_1)**2
-
-
-def variance_ratio_test(data):
-    price_series = data
-    log_return_series = []
-    for i in range(len(price_series)-1):
-        x = np.log(price_series[i+1]/price_series[i])
-        log_return_series.append(x)
-    var_1 = np.var(log_return_series, ddof=1)  # one-period return sample variance
-    vr_list = []
-    T = len(log_return_series)  # number of log-data points
-    for k in range(1, T):
-        m = k*(T - k + 1)*(1 - k/T)  # this accounts for the bias of the var_k estimator defined below
-        sum_term = []
-        for i in range(k, len(price_series)):
-            y = (np.log(price_series[i] / price_series[i - k]) - k*np.mean(log_return_series))**2
-            sum_term.append(y)
-        var_k = (1/m)*np.sum(sum_term)  # k-period return variance (as described by Lo & MacKinlay)
-        vr_k = var_k/var_1
-        vr_list.append(vr_k)
-    # now, want to check that this variance ratio satisfies an RWH (Random Walk Hypothesis)
-    asymptotic_var_vec = []
-    for k in range(1, T):
-        # asymptotic_var = 2*(2*k - 1)*(k - 1)/(3*k*T)  # variance assuming homoscedasticity
-        # the following three lines are the variance assuming heteroscedasticity
-        # asymptotic_var = 0
-        # for j in range(1, k):
-        #     asymptotic_var += (2 * (k - j) / k) ** 2 * delta(j, T, var_1, log_return_series)
-        asymptotic_var_vec.append(asymptotic_var)
-    centered_sample = vr_list - np.ones(len(vr_list))
-    standardized_sample = np.divide(centered_sample, np.sqrt(asymptotic_var_vec))
-    # now check the p-value of this sample, under the null hypothesis (Lo & MacKinley) that it is standard normal
-    p_value_vector = np.ones(len(standardized_sample)) - norm.cdf(standardized_sample)
-    return p_value_vector
-'''
-
-
-
 '''
 NOT RELEVANT - still working on it
 
