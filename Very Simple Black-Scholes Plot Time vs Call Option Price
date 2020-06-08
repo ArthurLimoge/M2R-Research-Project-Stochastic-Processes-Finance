@@ -1,0 +1,20 @@
+def myBSE_times(tau, E, sigma, r, S):
+    #values of tau created
+    tau_vals=np.linspace(0,tau,1001)
+    #from the values of tau, we find time values
+    t_vals=tau*np.ones(1001) - tau_vals
+    #essential values for our calculation
+    d1_vals=(np.log(S/E)+(r+(1/2)*sigma**2)*t_vals)/(sigma*np.sqrt(t_vals))
+    d2_vals=(np.log(S/E)+(r-(1/2)*sigma**2)*t_vals)/(sigma*np.sqrt(t_vals))
+    #values of normal distribution
+    n1_vals=norm.cdf(d1_vals)
+    n2_vals=norm.cdf(d2_vals)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals=S*n1_vals-E*np.exp(-r*t_vals)*n2_vals
+
+    plt.plot(t_vals, C_vals, 'b')
+    plt.title('Time vs call price')
+    plt.xlabel('t')
+    plt.ylabel('C')
+    return 'Graph plotted'
+
