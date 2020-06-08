@@ -1,0 +1,23 @@
+import numpy as np
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+
+#tau is the time difference T-t, where T is the maturity date of the stock; E is the expiry price, sigma is the volatility of the stock, r is the interest rate, S is the stock price
+
+def myBSE(tau, E, sigma, r, S):
+    #values of stock prices
+    s_vals=np.linspace(0,S,1001)
+    #essential values for our calculation
+    d1_vals=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    #values of normal distribution
+    n1_vals=norm.cdf(d1_vals)
+    n2_vals=norm.cdf(d2_vals)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals=s_vals*n1_vals-E*np.exp(-r*tau)*n2_vals
+
+    plt.plot(s_vals, C_vals, 'b')
+    plt.title('Stock price vs call price')
+    plt.xlabel('S')
+    plt.ylabel('C')
+    return 'Your graph has arrived :)'
