@@ -45,21 +45,18 @@ def market_predictions(data):
             r = r + t
 
         mu = r / len(restricted_data)
-        # mu = 0.5*(dt**2)
 
         # Calculate variance
         sigma = np.std(returns)
-        # sigma = dt
-
 
         # number of predictions we want
         scenario_size = 10
         # generate some numbers from a normal distribution
         b = {str(scenario): np.random.normal(0, 1, int(N)) for scenario in range(1, scenario_size + 1)}
-        # print(b)
+
         # cumulative addition to the previous value
         W = {str(scenario): b[str(scenario)].cumsum() for scenario in range(1, scenario_size + 1)}
-        # print(W)
+
 
         drift = (mu - 0.5 * sigma ** 2) * t
         diffusion = {str(scenario): sigma * W[str(scenario)] for scenario in range(1, scenario_size + 1)}
@@ -76,8 +73,6 @@ def market_predictions(data):
         for i in range(scenario_size):
             plt.plot(index, S[i, :])
 
-        # f = dataset[len(dataset)-days-1:len(dataset)]
-
 
         # plot the actual data
         plt.plot(dataset, 'r')
@@ -88,48 +83,7 @@ def market_predictions(data):
 
 
 a = market_predictions(dataset)
-
-
-'''
-NOT RELEVANT - still working on it
-
-
-want to compare this with just a randomised geometric brownian motion 
-that we get from a random walk, the brownian motion is X~N(0,dt)
-hence the geometric brownian motion is  Y=e^X, where logY~N(0,dt)
-
-when calculating random walk ---> brownian motion we get X
-then we take 
-
-
-def brown1(x0,t,N):
-    dt=t/N
-    x=[x0]
-    dx=[np.sqrt(dt) * np.random.randn()]
-
-    for i in range(1,N+1):
-        dx.append(np.sqrt(dt) * np.random.randn())
-        #print(np.sqrt(dt) * np.random.randn())
-        x.append(x[i-1]+dx[i])
-    print(x)
-    y=[np.exp(i) for i in x]
-    print(y)
-    #print(dx,x)
-    return(x)
-
-
-for i in range(2):
-    y=brown1(S_init,dt,days)
-    h=[k for k in y]
-    print(y,h)
-    plt.plot(index,h)
-
-plt.plot(dataset,'r')
-
-
-print(S_init,dt,days)
-'''
-
+print(a)
 
 
 
