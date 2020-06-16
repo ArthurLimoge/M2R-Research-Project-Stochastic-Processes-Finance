@@ -1,4 +1,4 @@
-Mat_time,Stock_Price,Call_Option_Price
+Mat_time,Stock_Price,Actual_call_Option_Price
 17,8.21,0.08
 16,8.68,0.16
 15,8.51,0.18
