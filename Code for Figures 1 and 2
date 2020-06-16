@@ -1,0 +1,286 @@
+import numpy as np
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+
+#tau is the time difference T-t, where T is the maturity date of the stock; E is the expiry price, sigma is the volatility of the stock, r is the interest rate, S is the stock price
+#In all the following functions, 'extra2' and 'extra3' are the variables we are changing whilst keeping them fixed as we plot stock price or time against call option price.
+#Eg to see the effects of increasing interest rate on call option price (given a stock price, and even though we don't plot interest rate vs call option price)
+
+#stock price against call option price
+
+#change interest rate
+def myBSE_stocks_interest_rate(tau, E, sigma, r, S, extra2, extra3):
+    #values of stock prices
+    s_vals=np.linspace(0,S,1001)
+    #essential values for our calculation
+    d1_vals_1=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_1=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d1_vals_2=(np.log(s_vals/E)+(extra2+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_2=(np.log(s_vals/E)+(extra2-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))    
+    d1_vals_3=(np.log(s_vals/E)+(extra3+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_3=(np.log(s_vals/E)+(extra3-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))    
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals_1)
+    n2_vals1=norm.cdf(d2_vals_1)
+    n1_vals2=norm.cdf(d1_vals_2)
+    n2_vals2=norm.cdf(d2_vals_2)
+    n1_vals3=norm.cdf(d1_vals_3)
+    n2_vals3=norm.cdf(d2_vals_3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=s_vals*n1_vals1-E*np.exp(-r*tau)*n2_vals1
+    C_vals2=s_vals*n1_vals2-E*np.exp(-extra2*tau)*n2_vals2
+    C_vals3=s_vals*n1_vals3-E*np.exp(-extra3*tau)*n2_vals3
+
+    plt.plot(s_vals, C_vals1, 'r', label='r￼￼￼￼=0.01')
+    plt.plot(s_vals, C_vals2, 'b', label='r=0.05')
+    plt.plot(s_vals, C_vals3, 'g', label='r=0.1')
+    plt.title('Stock Price vs Call Option Price')
+    plt.xlabel('S')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+    
+#change volatility   
+def myBSE_stocks_volatility(tau, E, sigma, r, S, extra2, extra3):
+    #values of stock prices
+    s_vals=np.linspace(0,S,1001)
+    #essential values for our calculation
+    d1_vals_1=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_1=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d1_vals_2=(np.log(s_vals/E)+(r+(1/2)*extra2**2)*tau)/(extra2*np.sqrt(tau))
+    d2_vals_2=(np.log(s_vals/E)+(r-(1/2)*extra2**2)*tau)/(extra2*np.sqrt(tau))    
+    d1_vals_3=(np.log(s_vals/E)+(r+(1/2)*extra3**2)*tau)/(extra3*np.sqrt(tau))
+    d2_vals_3=(np.log(s_vals/E)+(r-(1/2)*extra3**2)*tau)/(extra3*np.sqrt(tau))    
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals_1)
+    n2_vals1=norm.cdf(d2_vals_1)
+    n1_vals2=norm.cdf(d1_vals_2)
+    n2_vals2=norm.cdf(d2_vals_2)
+    n1_vals3=norm.cdf(d1_vals_3)
+    n2_vals3=norm.cdf(d2_vals_3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=s_vals*n1_vals1-E*np.exp(-r*tau)*n2_vals1
+    C_vals2=s_vals*n1_vals2-E*np.exp(-r*tau)*n2_vals2
+    C_vals3=s_vals*n1_vals3-E*np.exp(-r*tau)*n2_vals3
+
+    plt.plot(s_vals, C_vals1, 'r', label='σ=0.5￼￼￼￼')
+    plt.plot(s_vals, C_vals2, 'b', label='σ=1')
+    plt.plot(s_vals, C_vals3, 'g', label='σ=2')
+    plt.title('Stock Price vs Call Option Price')
+    plt.xlabel('S')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+
+#change strike price   
+def myBSE_stocks_strike(tau, E, sigma, r, S, extra2, extra3):
+    #values of stock prices
+    s_vals=np.linspace(0,S,1001)
+    #essential values for our calculation
+    d1_vals_1=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_1=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d1_vals_2=(np.log(s_vals/extra2)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_2=(np.log(s_vals/extra2)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))    
+    d1_vals_3=(np.log(s_vals/extra3)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_3=(np.log(s_vals/extra3)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))    
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals_1)
+    n2_vals1=norm.cdf(d2_vals_1)
+    n1_vals2=norm.cdf(d1_vals_2)
+    n2_vals2=norm.cdf(d2_vals_2)
+    n1_vals3=norm.cdf(d1_vals_3)
+    n2_vals3=norm.cdf(d2_vals_3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=s_vals*n1_vals1-E*np.exp(-r*tau)*n2_vals1
+    C_vals2=s_vals*n1_vals2-extra2*np.exp(-r*tau)*n2_vals2
+    C_vals3=s_vals*n1_vals3-extra3*np.exp(-r*tau)*n2_vals3
+
+    plt.plot(s_vals, C_vals1, 'r', label='E=5'￼)
+    plt.plot(s_vals, C_vals2, 'b', label='E=10')
+    plt.plot(s_vals, C_vals3, 'g', label='E=15')
+    plt.title('Stock Price vs Call Option Price')
+    plt.xlabel('S')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+    
+#change (T-t)   
+def myBSE_stocks_tdiff(tau, E, sigma, r, S, extra2, extra3):
+    #values of stock prices
+    s_vals=np.linspace(0,S,1001)
+    #essential values for our calculation
+    d1_vals_1=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d2_vals_1=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*tau)/(sigma*np.sqrt(tau))
+    d1_vals_2=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*extra2)/(sigma*np.sqrt(extra2))
+    d2_vals_2=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*extra2)/(sigma*np.sqrt(extra2))    
+    d1_vals_3=(np.log(s_vals/E)+(r+(1/2)*sigma**2)*extra3)/(sigma*np.sqrt(extra3))
+    d2_vals_3=(np.log(s_vals/E)+(r-(1/2)*sigma**2)*extra3)/(sigma*np.sqrt(extra3))    
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals_1)
+    n2_vals1=norm.cdf(d2_vals_1)
+    n1_vals2=norm.cdf(d1_vals_2)
+    n2_vals2=norm.cdf(d2_vals_2)
+    n1_vals3=norm.cdf(d1_vals_3)
+    n2_vals3=norm.cdf(d2_vals_3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=s_vals*n1_vals1-E*np.exp(-r*tau)*n2_vals1
+    C_vals2=s_vals*n1_vals2-E*np.exp(-r*extra2)*n2_vals2
+    C_vals3=s_vals*n1_vals3-E*np.exp(-r*extra3)*n2_vals3
+
+    plt.plot(s_vals, C_vals1, 'r', label='τ￼￼￼￼')
+    plt.plot(s_vals, C_vals2, 'b', label='τ=5')
+    plt.plot(s_vals, C_vals3, 'g', label='τ=10')
+    plt.title('Stock Price vs Call Option Price')
+    plt.xlabel('S')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+
+
+#time against call option price
+
+#changing interest rate
+def myBSE_times_interest_rate(tau, E, sigma, r, S, extra2, extra3):
+    #values of tau created
+    tau_vals=np.linspace(0,tau,1001)
+    #from the values of tau, we find time values
+    t_vals=tau*np.ones(1001) - tau_vals
+    #essential values for our calculation
+    d1_vals1=(np.log(S/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals1=(np.log(S/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals2=(np.log(S/extra2)+(extra2+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals2=(np.log(S/extra2)+(extra2-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals3=(np.log(S/extra3)+(extra3+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals3=(np.log(S/extra3)+(extra3-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals1)
+    n2_vals1=norm.cdf(d2_vals1)
+    n1_vals2=norm.cdf(d1_vals2)
+    n2_vals2=norm.cdf(d2_vals2)
+    n1_vals3=norm.cdf(d1_vals3)
+    n2_vals3=norm.cdf(d2_vals3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=S*n1_vals1-E*np.exp(-r*tau_vals)*n2_vals1
+    C_vals2=S*n1_vals2-extra2*np.exp(-extra2*tau_vals)*n2_vals2
+    C_vals3=S*n1_vals3-extra3*np.exp(-extra3*tau_vals)*n2_vals3
+    
+    plt.plot(t_vals, C_vals1, 'r', label='￼￼r=0.01')
+    plt.plot(t_vals, C_vals2, 'b', label='r=0.05')
+    plt.plot(t_vals, C_vals3, 'g', label='r=0.1')
+    plt.title('Time vs Call Option Price(C)')
+    plt.xlabel('t')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+    
+#changing volatility
+def myBSE_times_volatility(tau, E, sigma, r, S, extra2, extra3):
+    #values of tau created
+    tau_vals=np.linspace(0,tau,1001)
+    #from the values of tau, we find time values
+    t_vals=tau*np.ones(1001) - tau_vals
+    #essential values for our calculation
+    d1_vals1=(np.log(S/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals1=(np.log(S/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals2=(np.log(S/extra2)+(r+(1/2)*extra2**2)*tau_vals)/(extra2*np.sqrt(tau_vals))
+    d2_vals2=(np.log(S/extra2)+(r-(1/2)*extra2**2)*tau_vals)/(extra2*np.sqrt(tau_vals))
+    d1_vals3=(np.log(S/extra3)+(r+(1/2)*extra3**2)*tau_vals)/(extra3*np.sqrt(tau_vals))
+    d2_vals3=(np.log(S/extra3)+(r-(1/2)*extra3**2)*tau_vals)/(extra3*np.sqrt(tau_vals))
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals1)
+    n2_vals1=norm.cdf(d2_vals1)
+    n1_vals2=norm.cdf(d1_vals2)
+    n2_vals2=norm.cdf(d2_vals2)
+    n1_vals3=norm.cdf(d1_vals3)
+    n2_vals3=norm.cdf(d2_vals3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=S*n1_vals1-E*np.exp(-r*tau_vals)*n2_vals1
+    C_vals2=S*n1_vals2-extra2*np.exp(-r*tau_vals)*n2_vals2
+    C_vals3=S*n1_vals3-extra3*np.exp(-r*tau_vals)*n2_vals3
+    
+    plt.plot(t_vals, C_vals1, 'r', label='￼￼σ=0.5')
+    plt.plot(t_vals, C_vals2, 'b', label='σ=1')
+    plt.plot(t_vals, C_vals3, 'g', label='σ=2')
+    plt.title('Time vs Call Option Price(C)')
+    plt.xlabel('t')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+
+#changing strike price
+def myBSE_times_strike(tau, E, sigma, r, S, extra2, extra3):
+    #values of tau created
+    tau_vals=np.linspace(0,tau,1001)
+    #from the values of tau, we find time values
+    t_vals=tau*np.ones(1001) - tau_vals
+    #essential values for our calculation
+    d1_vals1=(np.log(S/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals1=(np.log(S/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals2=(np.log(S/extra2)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals2=(np.log(S/extra2)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals3=(np.log(S/extra3)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals3=(np.log(S/extra3)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals1)
+    n2_vals1=norm.cdf(d2_vals1)
+    n1_vals2=norm.cdf(d1_vals2)
+    n2_vals2=norm.cdf(d2_vals2)
+    n1_vals3=norm.cdf(d1_vals3)
+    n2_vals3=norm.cdf(d2_vals3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=S*n1_vals1-E*np.exp(-r*tau_vals)*n2_vals1
+    C_vals2=S*n1_vals2-extra2*np.exp(-r*tau_vals)*n2_vals2
+    C_vals3=S*n1_vals3-extra3*np.exp(-r*tau_vals)*n2_vals3
+    
+    plt.plot(t_vals, C_vals1, 'r', label='￼￼E=5')
+    plt.plot(t_vals, C_vals2, 'b', label='E=10')
+    plt.plot(t_vals, C_vals3, 'g', label='E=15')
+    plt.title('Time vs Call Option Price(C)')
+    plt.xlabel('t')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+
+#changing stock price
+def myBSE_times_stock(tau, E, sigma, r, S, extra2, extra3):
+    #values of tau created
+    tau_vals=np.linspace(0,tau,1001)
+    #from the values of tau, we find time values
+    t_vals=tau*np.ones(1001) - tau_vals
+    #essential values for our calculation
+    d1_vals1=(np.log(S/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals1=(np.log(S/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals2=(np.log(extra2/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals2=(np.log(extra2/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d1_vals3=(np.log(extra3/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals3=(np.log(extra3/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    #values of normal distribution
+    n1_vals1=norm.cdf(d1_vals1)
+    n2_vals1=norm.cdf(d2_vals1)
+    n1_vals2=norm.cdf(d1_vals2)
+    n2_vals2=norm.cdf(d2_vals2)
+    n1_vals3=norm.cdf(d1_vals3)
+    n2_vals3=norm.cdf(d2_vals3)
+    #using the relationship we obtain from solving the Black-Scholes equation
+    C_vals1=S*n1_vals1-E*np.exp(-r*tau_vals)*n2_vals1
+    C_vals2=extra2*n1_vals2-E*np.exp(-r*tau_vals)*n2_vals2
+    C_vals3=extra3*n1_vals3-E*np.exp(-r*tau_vals)*n2_vals3
+    
+    plt.plot(t_vals, C_vals1, 'r', label='￼￼S=5')
+    plt.plot(t_vals, C_vals2, 'b', label='S=10')
+    plt.plot(t_vals, C_vals3, 'g', label='S=15')
+    plt.title('Time vs Call Option Price(C)')
+    plt.xlabel('t')
+    plt.ylabel('C')
+    plt.legend()
+    return 'Graph plotted'
+
+#We then run the code above and when we actually create the plots, we type:
+myBSE_stocks_interest_rate(1, 10, 0.5, 0.01, 10, 0.05, 0.1) #Fig 1a
+myBSE_stocks_volatility(1,10,0.5,0.1,10,1,2) #Fig 1b
+myBSE_stocks_strike(1,5,1,0.1,10,10,15) #Fig 1c
+myBSE_stocks_tdiff(1, 10, 1, 0.1, 10, 5, 10) #Fig 1d
+myBSE_times_interest_rate(1, 10, 0.5, 0.01, 10, 0.05, 0.1) #Fig 2a
+myBSE_times_volatility(1, 10, 0.5, 0.1, 10, 1, 2) #Fig 2b
+myBSE_times_strike(1, 5, 1, 0.1, 10, 10, 15) #Fig 2c
+myBSE_times_stock(1, 10, 1, 0.1, 5, 10, 15) #Fig 2d
