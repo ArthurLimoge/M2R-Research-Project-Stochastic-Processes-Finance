@@ -28,7 +28,7 @@
 • Dataset6.csv -> S&P500 high frequency stock prices (1/min) from 17/11/2015 - source: https://www.quandl.com/databases/AS500/data
 
 
-#### :Code/Files used in Subsections 3.1.1 and 3.1.2
+#### Code/Files used in Subsections 3.1.1 and 3.1.2
 • DB.csv ->  Deutsche Bank stock prices (per day) from 12/06/2019 to 12/06/2020 -source:
 https://finance.yahoo.com/quote/DB/history?p=DB
 
