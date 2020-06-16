@@ -6,75 +6,104 @@ from scipy.stats import norm
 
 #open the file in read mode
 cols_list=["Date","Close"]
-df=pd.read_csv('DB.csv', header=0)
+df=pd.read_csv('Final_DB_results.csv', header=0)
+#Times to maturity
+col_a=list(df.Mat_time)
+#Stock price of the call
+col_b=list(df.Stock_Price)
+#real price of the call option
+col_c=list(df.Call_Option_Price)
+
     
-col_a=list(df.Matdiff)
-col_b=list(df.Close)
-
-
 def different_plotter_wrt_time(start):
     #choose a given time and initialise other values
     start_time=col_a[start]
-    S=col_b[start]
-    E=S
-    #interest rate - taken from TradingEconomics
-    r=0.0184
-    #volatility - we use the implied volatility value obtained from Barchart on Tuesday 9th June
-    sigma=0.8004
-    #choose variables relating to it
-    tau_vals=np.linspace(0,start_time,start_time+1)
-    t_vals=start_time*np.ones(len(tau_vals))-tau_vals
-     #essential values for our calculation
-    d1_vals=(np.log(S/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
-    d2_vals=(np.log(S/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
-    #values of normal distribution
+    #strike price of option DB#F1920E950000 (what Market Watch calls it) obtained from MarketWatch https://bigcharts.marketwatch.com/quickchart/quickchart.asp?symb=DB%23F1920E950000&insttype=&freq=1&show=&time=4
+    E=9.39
+    #interest rate - taken from https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp on Saturday 13th June
+    r=0.001
+    #volatility - we use the 20 day average implied volatility value for Friday 12th June obtained from https://www.alphaquery.com/stock/DB/volatility-option-statistics/20-day/iv-call (on Saturday 13th June 2020)
+    sigma=0.6838
+    #set up input variable 'vectors'
+    #times to maturity, with increments of 1
+    t_diff_vals=np.linspace(0,start_time,start_time+1)
+    #actual times, found from times to maturity
+    t_vals=start_time*np.ones(len(tau_vals))-t_diff_vals
+    #values of stock price
+    S_vals=col_b[start:]
+    #convert list to numpy array
+    S_array=np.array(S_vals)
+     #essential values for our calculation; plugging into formula obtained from Black-Scholes equation
+    d1_vals=(np.log(S_array/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals=(np.log(S_array/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    #values of normal distribution ie d1, d2 in formula
     n1_vals=norm.cdf(d1_vals)
     n2_vals=norm.cdf(d2_vals)
-    #using the relationship we obtain from solving the Black-Scholes equation
-    C_vals=S*n1_vals-E*np.exp(-r*tau_vals)*n2_vals
+    #fully using the relationship we obtain from solving the Black-Scholes equation
+    C_vals=S_array*n1_vals-E*np.exp(-r*tau_vals)*n2_vals
     
     #actual values of times and stock prices
+    #real times
     real_ts=col_a[start:]
-    real_Cs=col_b[start:]
+    #real call option prices
+    real_Cs=col_c[start:]
     
     #plot
-    plt.plot(t_vals,C_vals,'b',real_ts,real_Cs,'r')
-    plt.title('Time vs call price')
+    plt.plot(t_vals,C_vals,'b',label='Predicted call option prices')
+    plt.plot(real_ts,real_Cs,'r', label='Actual call option prices')
+    plt.title('Predicted vs actual call option prices')
     plt.xlabel('t/days')
     plt.ylabel('C/$')
+    plt.legend()
     return 'Graph plotted'
 
-def error_plotter_wrt_time(start):#choose a given time and initialise other values
+
+
+def error_plotter_wrt_time2(start):
+    #choose a given time and initialise other values
     start_time=col_a[start]
-    S=col_b[start]
-    E=S
-    #interest rate - taken from TradingEconomics
-    r=0.0184
-    #volatility - we use the implied volatility value obtained from Barchart on Tuesday 9th June
-    sigma=0.8004
-    #choose variables relating to it
-    real_ts=col_a[start:]
-    real_taus=start_time*np.ones(len(real_ts))-real_ts
-     #essential values for our calculation
-    d1_vals=(np.log(S/E)+(r+(1/2)*sigma**2)*real_taus)/(sigma*np.sqrt(real_taus))
-    d2_vals=(np.log(S/E)+(r-(1/2)*sigma**2)*real_taus)/(sigma*np.sqrt(real_taus))
-    #values of normal distribution
+    #strike price of option DB#F1920E950000 (what Market Watch calls it) obtained from MarketWatch https://bigcharts.marketwatch.com/quickchart/quickchart.asp?symb=DB%23F1920E950000&insttype=&freq=1&show=&time=4
+    E=9.39
+    #interest rate - taken from https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp on Saturday 13th June
+    r=0.001
+    #volatility - we use the 20 day average implied volatility value for Friday 12th June obtained from https://www.alphaquery.com/stock/DB/volatility-option-statistics/20-day/iv-call (obtained on Saturday 13th June 2020)
+    sigma=0.6838
+    #set up input variable 'vectors'
+    #times to maturity, with increments of 1
+    t_diff_vals=np.linspace(0,start_time,start_time+1)
+    #actual times, found from times to maturity
+    t_vals=start_time*np.ones(len(tau_vals))-t_diff_vals
+    #values of stock price
+    S_vals=col_b[start:]
+    #convert list to numpy array
+    S_array=np.array(S_vals)
+     #essential values for our calculation; plugging into formula obtained from Black-Scholes equation
+    d1_vals=(np.log(S_array/E)+(r+(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    d2_vals=(np.log(S_array/E)+(r-(1/2)*sigma**2)*tau_vals)/(sigma*np.sqrt(tau_vals))
+    #values of normal distribution ie d1, d2 in formula
     n1_vals=norm.cdf(d1_vals)
     n2_vals=norm.cdf(d2_vals)
-    #using the relationship we obtain from solving the Black-Scholes equation
-    C_vals=S*n1_vals-E*np.exp(-r*real_taus)*n2_vals
+    #fully using the relationship we obtain from solving the Black-Scholes equation
+    C_vals=S_array*n1_vals-E*np.exp(-r*tau_vals)*n2_vals
     
     #actual values of times and stock prices
-    real_Cs=col_b[start:]
+    #real times
+    real_ts=col_a[start:]
+    #real call option prices
+    real_Cs=col_c[start:]
     
-    #errors
-    error_Cs=real_Cs-C_vals
+    #errors(=predicted call option price - actual call option price)
+    error_Cs=C_vals-real_Cs
     
     #plot errors
     plt.plot(real_ts,error_Cs,'b')
     plt.title('Difference between actual price and Black-Scholes predicted price ')
     plt.xlabel('t')
-    plt.ylabel('Difference (actual-BS)')
+    plt.ylabel('Difference (BS-actual)')
     return 'Graph plotted'
     
     
+#To create the plots Figures (3a) and (3b) in the project (page 22), we input the following:
+def different_plotter_wrt_time(start)
+def error_plotter_wrt_time2(start)
+  
