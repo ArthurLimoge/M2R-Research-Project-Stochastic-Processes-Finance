@@ -31,8 +31,11 @@
 #### :Code/Files used in Subsections 3.1.1 and 3.1.2
 • DB.csv ->  Deutsche Bank stock prices (per day) from 12/06/2019 to 12/06/2020 -source:
 https://finance.yahoo.com/quote/DB/history?p=DB
-• DB_final_results.csv ->  Deutsche Bank stock prices (at close of trading), times between 26/05/2020 and 12/06/2020 inclusive, call option prices - source:
+
+• Final_DB_results.csv ->  Deutsche Bank stock prices (at close of trading), times between 26/05/2020 and 12/06/2020 inclusive, call option prices - source:
 https://bigcharts.marketwatch.com/quickchart/quickchart.asp?symb=DB%23F1920E950000&insttype=&freq=1&show=&time=4 (call option prices)
-• Black-Scholes
+
+• Black-Scholes Difference Plotter DB
+
 • Code for Figures 1 and 2
 
