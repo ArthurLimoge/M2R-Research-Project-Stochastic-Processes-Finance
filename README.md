@@ -1,6 +1,6 @@
 # M2R-Project
 
-:large_blue_diamond: M2R.pdf: final report of the project
+:large_blue_diamond: 0_M2R_Report.pdf: final report of the project
 
 ## Programs: 
 
