@@ -1,5 +1,7 @@
 # M2R-Project
 
+Project done under the supervision of [Dr. Andreas Sojmark](https://www.imperial.ac.uk/people/a.sojmark)
+
 :large_blue_diamond: 0_M2R_Report.pdf: final report of the project
 
 ## Programs: 
