@@ -6,15 +6,17 @@ Project done under the supervision of [Dr. Andreas Sojmark](https://www.imperial
 
 ### Contributions:
 
-• Yongda Zhu: construction of models to understand discrete random walks (section 1.1)
 
-• Zhuohan Yang: generalization of the latter models to continuous cases (section 1.2)
+• Arthur Limoge: implementation of the variance ratio test in R (3.1.3), theoretical motivation and intuition for Itô Calculus (section 3.2)
 
 • Munazza Sarwar: derivation of the Black-Scholes equation from a binomial model (section 2.1)
 
 • Timothy Minn Kang: solving of the Black-Scholes and study of the heat equation (section 3.2), and solution curves and error analysis simulations in Python (3.1.1, 3.1.2)
 
-• Arthur Limoge: implementation of the variance ratio test in R (3.1.3), theoretical motivation and intuition for Itô Calculus (section 3.2)
+• Yongda Zhu: construction of models to understand discrete random walks (section 1.1)
+
+• Zhuohan Yang: generalization of the latter models to continuous cases (section 1.2)
+
 
 ## Programs: 
 
